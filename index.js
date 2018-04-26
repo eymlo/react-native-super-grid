@@ -1,8 +1,10 @@
 /* eslint react/no-array-index-key: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Dimensions, ViewPropTypes, FlatList } from 'react-native';
+import { View, Dimensions, ViewPropTypes } from 'react-native';
 import { chunkArray } from './utils';
+
+import FlatList  from 'FlatList';
 
 class SuperGrid extends Component {
   constructor(props) {
@@ -108,6 +110,7 @@ class SuperGrid extends Component {
       flexDirection: 'column',
       justifyContent: 'center',
       width: containerDimension,
+      height: containerDimension - spacing,
       paddingRight: spacing,
     };
     let itemStyle = {};
