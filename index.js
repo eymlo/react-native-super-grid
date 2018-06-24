@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Dimensions, ViewPropTypes } from 'react-native';
 import { chunkArray } from './utils';
+import SuperGridSectionList from './SuperGridSectionList'
 
 import FlatList  from 'FlatList';
 
@@ -60,7 +61,7 @@ class SuperGrid extends Component {
   }
 
   renderVerticalRow(data) {
-    const { itemDimension, spacing, containerDimension, fixed } = this.state;
+    const { itemDimension, spacing, containerDimension, fixed, itemsPerRow } = this.state;
     const rowStyle = {
       flexDirection: 'column',
       paddingTop: spacing,
@@ -88,7 +89,7 @@ class SuperGrid extends Component {
         {(data || []).map((item, i) => (
           <View key={`${data.key}_${i}`} style={itemContainerStyle}>
             <View style={itemStyle}>
-              {this.props.renderItem(item, i)}
+              {this.props.renderItem(item,  i + (data.rowNumber * itemsPerRow))}
             </View>
           </View>
         ))}
@@ -97,7 +98,7 @@ class SuperGrid extends Component {
   }
 
   renderHorizontalRow(data) {
-    const { itemDimension, containerDimension, spacing, fixed } = this.state;
+    const { itemDimension, containerDimension, spacing, fixed, itemsPerRow } = this.state;
     const rowStyle = {
       flexDirection: 'row',
       paddingLeft: spacing,
@@ -126,7 +127,7 @@ class SuperGrid extends Component {
         {(data || []).map((item, i) => (
           <View key={`${data.key}_${i}`} style={itemContainerStyle}>
             <View style={itemStyle}>
-              {this.props.renderItem(item, i)}
+              {this.props.renderItem(item, i + (data.rowNumber * itemsPerRow))}
             </View>
           </View>
         ))}
@@ -147,10 +148,13 @@ class SuperGrid extends Component {
       horizontal, ...props } = this.props;
     const { itemsPerRow } = this.state;
 
-    const chunked = chunkArray(items, itemsPerRow);
+    const chunked = chunkArray(items, itemsPerRow); //Splitting the data into rows
+
+    //Adding metadata to these rows
     const rows = chunked.map((r, i) => {
       const keydRow = [...r];
       keydRow.key = `row_${i}`;
+      keydRow.rowNumber = i; //Assigning a row number to each row to allow proper indexing later
       keydRow.isLast = (chunked.length - 1 === i);
       return keydRow;
     });
@@ -194,3 +198,4 @@ SuperGrid.defaultProps = {
 };
 
 export default SuperGrid;
+export {SuperGridSectionList};
