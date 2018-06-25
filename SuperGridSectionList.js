@@ -1,8 +1,10 @@
 /* eslint react/no-array-index-key: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Dimensions, ViewPropTypes, SectionList } from 'react-native';
+import { View, Dimensions, ViewPropTypes } from 'react-native';
 import { chunkArray } from './utils';
+import SectionList from 'SectionList';
+
 
 /**
  * This class is a modification on the main super grid class. It renders a vertical scrolling grid SectionList
@@ -77,6 +79,7 @@ class SuperGridSectionList extends Component {
       flexDirection: 'column',
       justifyContent: 'center',
       width: containerDimension,
+      height: containerDimension - spacing,
       paddingRight: spacing,
     };
     let itemStyle = {};
@@ -108,7 +111,7 @@ class SuperGridSectionList extends Component {
     //Deep copy, so that re-renders and chunkArray functions don't affect the actual items object
     let sectionsCopy = JSON.parse(JSON.stringify(sections)); 
 
-    for (sectionsPair of sectionsCopy){
+    for (let sectionsPair of sectionsCopy){
 
       //Going through all the sections in sectionsCopy, and dividing their 'data' fields into smaller 'chunked' arrays to represent rows
       const chunked = chunkArray(sectionsPair.data, itemsPerRow); 
