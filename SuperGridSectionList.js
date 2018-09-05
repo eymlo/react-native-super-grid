@@ -69,18 +69,26 @@ class SuperGridSectionList extends Component {
     const { itemDimension, containerDimension, spacing, fixed, sections, itemsPerRow } = this.state;
     const rowStyle = {
       flexDirection: 'row',
-      paddingLeft: spacing,
-      paddingBottom: spacing,
+      borderBottomWidth: spacing,
+      borderBottomColor: this.props.paddingColor || 'black',
+      borderLeftWidth: spacing,
+      borderLeftColor: this.props.paddingColor || 'black',
     };
     if (item.isLast) {
-      rowStyle.marginBottom = spacing;
+      rowStyle.borderBottomWidth = spacing;
+      rowStyle.borderBottomColor = this.props.paddingColor || 'black';
+    }
+    if (item.isFirst) {
+      rowStyle.borderTopWidth = spacing;
+      rowStyle.borderTopColor = this.props.paddingColor || 'black';
     }
     const itemContainerStyle = {
       flexDirection: 'column',
       justifyContent: 'center',
       width: containerDimension,
       height: containerDimension - spacing,
-      paddingRight: spacing,
+      borderRightWidth: spacing,
+      borderRightColor: this.props.paddingColor || 'black',
     };
     let itemStyle = {};
     if (fixed) {
@@ -122,6 +130,7 @@ class SuperGridSectionList extends Component {
         keydRow.key = `row_${i}`;
         keydRow.rowNumber = i; //Assigning a row number to each row to allow proper indexing later (row numbers local to section, not whole list)
         keydRow.isLast = (chunked.length - 1 === i);
+        keydRow.isFirst = (0 === i);
         return keydRow;
       });
       sectionsPair.data = rows;
