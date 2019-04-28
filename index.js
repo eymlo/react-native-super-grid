@@ -114,7 +114,7 @@ class SuperGrid extends Component {
       height: containerDimension - spacing,
       paddingRight: spacing,
     };
-    let itemStyle = {};
+    let itemStyle = { height: '100%' };
     if (fixed) {
       itemStyle = {
         width: itemDimension,

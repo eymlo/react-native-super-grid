@@ -90,7 +90,7 @@ class SuperGridSectionList extends Component {
       borderRightWidth: spacing,
       borderRightColor: this.props.paddingColor || 'black',
     };
-    let itemStyle = {};
+    let itemStyle = { height: '100%' };
     if (fixed) {
       itemStyle = {
         width: itemDimension,
